@@ -262,6 +262,20 @@ hostnames = [
     aqua.yourowndomain.com
 ]
 ```
+
+While the things are spinning up, head over to your CloudWatch Log Groups and search for the `/ecs/aquacsp/` group. Here you can see your logs for the console and gateway in case something doesn't go as expected:
+
+<p align="center">
+<img src="https://github.com/jeremyjturner/terraform-aqua-csp/blob/master/images/04-aws-cloudwatch-log-group-example.jpg" alt="Example of Finding CloudWatch Logs for Aqua CSP." height="75%" width="75%">
+</p>
+
+Your console should be accessible by whatever FQDN you configured:
+
+<p align="center">
+<img src="https://github.com/jeremyjturner/terraform-aqua-csp/blob/master/images/05-aqua-csp-login-screen-example.jpg" alt="Example of Aqua CSP Login Screen." height="75%" width="75%">
+</p>
+
+
 # Cleaning Up
 
 Once you've tested everything, make sure to clean-up the resources your made. Otherwise, you'll be footing the bill for some beefy instances.
