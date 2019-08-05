@@ -39,3 +39,8 @@ resource "aws_iam_policy_attachment" "ecr-role" {
   roles      = ["${aws_iam_role.ecr_role.name}"]
   policy_arn = "${data.aws_iam_policy.AmazonEC2ContainerRegistryReadOnly.arn}"
 }
+
+output "ecr_role_arn" {
+  value = "${aws_iam_role.ecr_role.arn}"
+}
+
