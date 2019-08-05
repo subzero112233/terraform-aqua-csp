@@ -7,7 +7,7 @@ variable "aqua_account_id" {
   description = "The account in which Aqua is installed on"
 }
 
-data "aws_iam_policy" "AmazonEC2ContainerRegistryPowerUser" {
+data "aws_iam_policy" "AmazonEC2ContainerRegistryReadOnly" {
   arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
 
@@ -37,5 +37,5 @@ resource "aws_iam_role" "ecr_role" {
 resource "aws_iam_policy_attachment" "ecr-role" {
   name       = "ecr-attachment"
   roles      = ["${aws_iam_role.ecr_role.name}"]
-  policy_arn = "${data.aws_iam_policy.AmazonEC2ContainerRegistryPowerUser.arn}"
+  policy_arn = "${data.aws_iam_policy.AmazonEC2ContainerRegistryReadOnly.arn}"
 }
