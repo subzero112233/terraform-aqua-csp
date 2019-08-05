@@ -28,7 +28,7 @@ data "aws_iam_policy_document" "trust_policy-ecs_instance" {
 }
 
 resource "aws_iam_role_policy_attachment" "policy_attachment-ssm-ecs_instance" {
-  role       = "${aws_iam_role.instance_role-ecs_instance.name}"
+  role = "${aws_iam_role.instance_role-ecs_instance.name}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
 }
 
@@ -109,8 +109,10 @@ data "aws_iam_policy_document" "task_execution_role_trust" {
       type        = "Service"
       identifiers = ["ecs-tasks.amazonaws.com"]
     }
+
   }
 }
+
 
 resource "aws_iam_role" "task_execution_role" {
   name               = "${var.project}-task_execution_role"
@@ -158,9 +160,10 @@ EOF
 
   tags = {
     Terraform = "true"
-    Owner = "${var.resource_owner}"
+    Owner     = "${var.resource_owner}"
   }
 }
+
 resource "aws_iam_role_policy" "aquacsp-vpc" {
   name = "${var.project}-VPC-Flow-Logs-Policy"
   role = "${aws_iam_role.aquacsp-vpc.id}"
@@ -184,3 +187,23 @@ resource "aws_iam_role_policy" "aquacsp-vpc" {
 }
 EOF
 }
+
+
+resource "aws_iam_role_policy" "assume_role" {
+  name = "allow-assume-role"
+  role = "${aws_iam_role.instance_role-ecs_instance.id}"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+

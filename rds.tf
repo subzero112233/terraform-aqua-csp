@@ -1,6 +1,6 @@
 module "db" {
-  source            = "terraform-aws-modules/rds/aws"
-  version           = "~> 1.0"
+  source  = "terraform-aws-modules/rds/aws"
+  version = "~> 1.0"
 
   identifier        = "${var.project}-rds"
   engine            = "postgres"
@@ -31,6 +31,6 @@ module "db" {
   tags = {
     Project   = "${var.project}"
     Terraform = "true"
-    Owner = "${var.resource_owner}"
+    Owner     = "${var.resource_owner}"
   }
 }

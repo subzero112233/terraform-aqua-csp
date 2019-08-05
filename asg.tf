@@ -23,7 +23,7 @@ data "template_file" "userdata" {
 }
 
 module "asg" {
-  source = "terraform-aws-modules/autoscaling/aws"
+  source  = "terraform-aws-modules/autoscaling/aws"
   version = "~> 2.0"
 
   name = "service"
@@ -43,11 +43,11 @@ module "asg" {
   ]
 
   # Auto scaling group
-  asg_name                  = "${var.project}-ecs-asg"
-  target_group_arns         = ["${aws_lb_target_group.lb.arn}"]
+  asg_name          = "${var.project}-ecs-asg"
+  target_group_arns = ["${aws_lb_target_group.lb.arn}"]
   # Only a single load balancer can be attached to an ECS service at once.
   # Aqua CSP has the console and gateway containers linked so must use ELB Classic.
-  load_balancers            = ["${aws_elb.gw-elb.name}"]
+  load_balancers = ["${aws_elb.gw-elb.name}"]
   vpc_zone_identifier       = "${module.vpc.public_subnets}"
   health_check_type         = "EC2"
   min_size                  = 1

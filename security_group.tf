@@ -16,7 +16,7 @@ resource "aws_security_group" "alb" {
   tags = {
     Name      = "${var.project}-alb-sg"
     Terraform = "true"
-    Owner = "${var.resource_owner}"
+    Owner     = "${var.resource_owner}"
   }
 }
 
@@ -33,6 +33,15 @@ resource "aws_security_group_rule" "https-ingress-alb" {
   type              = "ingress"
   from_port         = 443
   to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = "${aws_security_group.alb.id}"
+}
+
+resource "aws_security_group_rule" "http-80-ingress-alb" {
+  type              = "ingress"
+  from_port         = 8080
+  to_port           = 8080
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = "${aws_security_group.alb.id}"
@@ -56,7 +65,7 @@ resource "aws_security_group" "ec2" {
   tags = {
     Name      = "${var.project}-ec2-sg"
     Terraform = "true"
-    Owner = "${var.resource_owner}"
+    Owner     = "${var.resource_owner}"
   }
 }
 
@@ -87,18 +96,19 @@ resource "aws_security_group" "ec2-gateway" {
   tags = {
     Name      = "${var.project}-ec2-gw-sg"
     Terraform = "true"
-    Owner = "${var.resource_owner}"
+    Owner     = "${var.resource_owner}"
   }
 }
 
 resource "aws_security_group_rule" "gateway_ingress-ec2" {
-  type                     = "ingress"
-  from_port                = "${var.aqua_server_port_02}"
-  to_port                  = "${var.aqua_server_port_02}"
-  protocol                 = "tcp"
+  type      = "ingress"
+  from_port = "${var.aqua_server_port_02}"
+  to_port   = "${var.aqua_server_port_02}"
+  protocol  = "tcp"
+
   # Remember, cidr_blocks must be a list!
-  cidr_blocks              = ["${var.vpc_cidr}"]
-  security_group_id        = "${aws_security_group.ec2-gateway.id}"
+  cidr_blocks       = ["${var.vpc_cidr}"]
+  security_group_id = "${aws_security_group.ec2-gateway.id}"
 }
 
 #################################################
@@ -119,7 +129,7 @@ resource "aws_security_group" "rds" {
   tags = {
     Name      = "${var.project}-rds-sg"
     Terraform = "true"
-    Owner = "${var.resource_owner}"
+    Owner     = "${var.resource_owner}"
   }
 }
 

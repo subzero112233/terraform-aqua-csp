@@ -1,13 +1,13 @@
 variable "region" {
-  default = "ap-northeast-1"
+  default = "us-east-1"
 }
 
 variable "resource_owner" {
-  default = "Your Name"
+  default = "Reshef Sharvit"
 }
 
 variable "project" {
-  default = "aquacsp"
+  default = "aquaresheftest"
 }
 
 #################################################
@@ -16,6 +16,7 @@ variable "project" {
 variable "ssl_certificate_id" {
   default = "arn:aws:acm:<region>:<aws account id:certificate/<certificate id>"
 }
+
 #################################################
 # DNS Configuration - INPUT REQUIRED
 #################################################
@@ -23,26 +24,25 @@ variable "dns_domain" {
   default = ""
 }
 
-variable "aqua_zone_id" {
-  default = ""
-}
+variable "aqua_zone_id" {}
+
 #################################################
 # VPC Configuration
 #################################################
 variable "vpc_cidr" {
-  default = "10.50.0.0/16"
+  default = "10.111.0.0/16"
 }
 
 variable "vpc_public_subnets" {
-  default = ["10.50.0.0/20", "10.50.64.0/20", "10.50.128.0/20"]
+  default = ["10.111.1.0/24", "10.111.2.0/24"]
 }
 
 variable "vpc_private_subnets" {
-  default = ["10.50.32.0/19", "10.50.96.0/19", "10.50.160.0/19"]
+  default = ["10.111.3.0/24", "10.111.4.0/24"]
 }
 
 variable "vpc_azs" {
-  default = ["ap-northeast-1a", "ap-northeast-1c", "ap-northeast-1d"]
+  default = ["us-east-1a", "us-east-1b"]
 }
 
 #################################################
@@ -68,7 +68,6 @@ variable "secretsmanager_db_password" {
 # EC2 Configuration - INPUT REQUIRED
 #################################################
 variable "ssh-key_name" {
-  default = "your-ssh-key-goes-here"
 }
 
 variable "instance_type" {

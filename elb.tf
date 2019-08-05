@@ -3,11 +3,11 @@
 #################################################
 
 resource "aws_elb" "gw-elb" {
-  name               = "${var.project}-aqua-gw-elb"
-  subnets             = ["${element(module.vpc.private_subnets,0)}","${element(module.vpc.private_subnets,1)}","${element(module.vpc.private_subnets,2)}"]
-  security_groups     = ["${aws_security_group.ec2-gateway.id}"]
+  name            = "${var.project}-aqua-gw-elb"
+  subnets         = ["${element(module.vpc.private_subnets,0)}", "${element(module.vpc.private_subnets,1)}", "${element(module.vpc.private_subnets,2)}"]
+  security_groups = ["${aws_security_group.ec2-gateway.id}"]
 
-  internal           = true
+  internal = true
 
   listener {
     instance_port     = 8443
@@ -31,6 +31,6 @@ resource "aws_elb" "gw-elb" {
 
   tags = {
     Terraform = "true"
-    Owner = "${var.resource_owner}"
+    Owner     = "${var.resource_owner}"
   }
 }

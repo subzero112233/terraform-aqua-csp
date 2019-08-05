@@ -19,32 +19,42 @@ resource "aws_lb" "lb" {
 #################################################
 # Listener
 #################################################
+#resource "aws_lb_listener" "redirect" {
+#  load_balancer_arn = "${aws_lb.lb.arn}"
+#  port              = "80"
+#  protocol          = "HTTP"
+
+#  default_action {
+#    type = "redirect"
+
+#    redirect {
+#      port        = "443"
+#      protocol    = "HTTPS"
+#      status_code = "HTTP_301"
+#    }
+#  }
+#}
+
+#resource "aws_lb_listener" "console" {
+#  load_balancer_arn = "${aws_lb.lb.arn}"
+#  port              = "443"
+#  protocol          = "HTTP"
+#  ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
+#  certificate_arn   = "${var.ssl_certificate_id}"
+
+#  default_action {
+#    type             = "forward"
+#    target_group_arn = "${aws_lb_target_group.lb.arn}"
+#  }
+#}
+
 resource "aws_lb_listener" "redirect" {
   load_balancer_arn = "${aws_lb.lb.arn}"
-  port              = "80"
+  port              = "8080"
   protocol          = "HTTP"
-
-  default_action {
-    type = "redirect"
-
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
-  }
-}
-
-resource "aws_lb_listener" "console" {
-  load_balancer_arn = "${aws_lb.lb.arn}"
-  port              = "443"
-  protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
-  certificate_arn   = "${var.ssl_certificate_id}"
 
   default_action {
     type             = "forward"
     target_group_arn = "${aws_lb_target_group.lb.arn}"
   }
 }
-
